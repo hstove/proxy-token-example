@@ -8,13 +8,33 @@ cache_dir = './.cache'
 [[project.requirements]]
 contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
 
+[contracts.proxy]
+path = 'contracts/proxy.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.implementation]
+path = 'contracts/implementation.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.implementation-trait]
+path = 'contracts/implementation-trait.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.outer-v1]
+path = 'contracts/outer-v1.clar'
+clarity_version = 2
+epoch = 2.5
+
 [contracts.token]
 path = 'contracts/token.clar'
 clarity_version = 2
 epoch = 2.5
 
-[contracts.proxy-v1]
-path = 'contracts/proxy-v1.clar'
+[contracts.proxy-token-trait]
+path = 'contracts/proxy-token-trait.clar'
 clarity_version = 2
 epoch = 2.5
 

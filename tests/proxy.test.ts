@@ -4,42 +4,39 @@ import { describe, expect, it } from "vitest";
 import { rovOk, txOk, txErr, rov } from "@clarigen/test";
 
 const contracts = projectFactory(project, "simnet");
-const proxy = contracts.proxyV1;
-const token = contracts.token;
+const proxy = contracts.proxy;
+const implementation = contracts.implementation;
 
 const owner = accounts.deployer.address;
 
 const alice = accounts.wallet_1.address;
 
-const tokenErrors = {
-  invalidCaller: token.constants.ERR_INVALID_CALLER.value,
-  unauthorized: token.constants.ERR_UNAUTHORIZED.value,
+const implementationErrors = {
+  invalidCaller: implementation.constants.ERR_INVALID_CALLER.value,
+  unauthorized: implementation.constants.ERR_UNAUTHORIZED.value,
+  blocked: implementation.constants.ERR_BLOCKED.value,
 } as const;
 
 const proxyErrors = {
-  blocklisted: proxy.constants.ERR_BLOCKED.value,
+  invalidImplementation: proxy.constants.ERR_INVALID_IMPLEMENTATION.value,
   unauthorized: proxy.constants.ERR_UNAUTHORIZED.value,
 } as const;
 
 describe("Token proxy contract", () => {
   it("initial setup", () => {
     // Proxy not set yet
-    const currentProxy = rovOk(token.getProxy());
-    expect(currentProxy).toEqual(null);
-
-    // owner sets the proxy
-    txOk(token.setProxy(proxy.identifier), owner);
-    expect(rovOk(token.getProxy())).toEqual(proxy.identifier);
+    const currentProxy = rov(proxy.getImplementation());
+    expect(currentProxy).toEqual(implementation.identifier);
 
     // mint some tokens for testing
-    txOk(token.mint(1000, alice), owner);
-    txOk(token.mint(1000, owner), owner);
-    expect(rovOk(token.getBalance(alice))).toEqual(1000n);
+    txOk(proxy.mint(1000, alice, implementation.identifier), owner);
+    txOk(proxy.mint(1000, owner, implementation.identifier), owner);
+    expect(rovOk(proxy.getBalance(alice))).toEqual(1000n);
   });
 
-  it("users cannot transfer directly in the token contract", () => {
+  it("users cannot transfer directly in the implementation contract", () => {
     const receipt = txErr(
-      token.transfer({
+      implementation.transfer({
         amount: 10,
         sender: alice,
         recipient: owner,
@@ -48,7 +45,14 @@ describe("Token proxy contract", () => {
       alice
     );
 
-    expect(receipt.value).toEqual(tokenErrors.invalidCaller);
+    expect(receipt.value).toEqual(implementationErrors.invalidCaller);
+  });
+
+  it("implementation verification", () => {
+    const receipt = rovOk(
+      proxy.validateImplementation(implementation.identifier)
+    );
+    expect(receipt).toEqual(true);
   });
 
   it("users can transfer from proxy", () => {
@@ -58,6 +62,7 @@ describe("Token proxy contract", () => {
         sender: alice,
         recipient: owner,
         memo: null,
+        implementation: implementation.identifier,
       }),
       alice
     );
@@ -65,9 +70,9 @@ describe("Token proxy contract", () => {
   });
 
   it("owner blocks alice", () => {
-    txOk(proxy.updateBlocklist(alice, true), owner);
+    txOk(implementation.updateBlocklist(alice, true), owner);
 
-    expect(rov(proxy.isBlocked(alice))).toEqual(true);
+    expect(rov(implementation.isBlocked(alice))).toEqual(true);
   });
 
   it("blocked user cant transfer from proxy", () => {
@@ -77,10 +82,11 @@ describe("Token proxy contract", () => {
         sender: alice,
         recipient: owner,
         memo: null,
+        implementation: implementation.identifier,
       }),
       alice
     );
 
-    expect(receipt.value).toEqual(proxyErrors.blocklisted);
+    expect(receipt.value).toEqual(implementationErrors.blocked);
   });
 });
