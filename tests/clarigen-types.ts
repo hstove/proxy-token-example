@@ -2,7 +2,60 @@
 import type { TypedAbiArg, TypedAbiFunction, TypedAbiMap, TypedAbiVariable, Response } from '@clarigen/core';
 
 export const contracts = {
-  sip010TraitFtStandard: {
+  proxyV1: {
+  "functions": {
+    transfer: {"name":"transfer","access":"public","args":[{"name":"amount","type":"uint128"},{"name":"sender","type":"principal"},{"name":"recipient","type":"principal"},{"name":"memo","type":{"optional":{"buffer":{"length":34}}}}],"outputs":{"type":{"response":{"ok":"bool","error":"uint128"}}}} as TypedAbiFunction<[amount: TypedAbiArg<number | bigint, "amount">, sender: TypedAbiArg<string, "sender">, recipient: TypedAbiArg<string, "recipient">, memo: TypedAbiArg<Uint8Array | null, "memo">], Response<boolean, bigint>>,
+    updateBlocklist: {"name":"update-blocklist","access":"public","args":[{"name":"account","type":"principal"},{"name":"blocked","type":"bool"}],"outputs":{"type":{"response":{"ok":"bool","error":"uint128"}}}} as TypedAbiFunction<[account: TypedAbiArg<string, "account">, blocked: TypedAbiArg<boolean, "blocked">], Response<boolean, bigint>>,
+    isBlocked: {"name":"is-blocked","access":"read_only","args":[{"name":"account","type":"principal"}],"outputs":{"type":"bool"}} as TypedAbiFunction<[account: TypedAbiArg<string, "account">], boolean>
+  },
+  "maps": {
+    blocklist: {"name":"blocklist","key":"principal","value":"bool"} as TypedAbiMap<string, boolean>
+  },
+  "variables": {
+    ERR_BLOCKED: {
+  name: 'ERR_BLOCKED',
+  type: {
+    response: {
+      ok: 'none',
+      error: 'uint128'
+    }
+  },
+  access: 'constant'
+} as TypedAbiVariable<Response<null, bigint>>,
+    ERR_UNAUTHORIZED: {
+  name: 'ERR_UNAUTHORIZED',
+  type: {
+    response: {
+      ok: 'none',
+      error: 'uint128'
+    }
+  },
+  access: 'constant'
+} as TypedAbiVariable<Response<null, bigint>>,
+    owner: {
+  name: 'owner',
+  type: 'principal',
+  access: 'constant'
+} as TypedAbiVariable<string>
+  },
+  constants: {
+  ERR_BLOCKED: {
+    isOk: false,
+    value: 409n
+  },
+  ERR_UNAUTHORIZED: {
+    isOk: false,
+    value: 404n
+  },
+  owner: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+},
+  "non_fungible_tokens": [
+    
+  ],
+  "fungible_tokens":[],"epoch":"Epoch25","clarity_version":"Clarity2",
+  contractName: 'proxy-v1',
+  },
+sip010TraitFtStandard: {
   "functions": {
     
   },
@@ -111,65 +164,12 @@ token: {
   ],
   "fungible_tokens":[{"name":"mytoken"}],"epoch":"Epoch25","clarity_version":"Clarity2",
   contractName: 'token',
-  },
-tokenV1: {
-  "functions": {
-    transfer: {"name":"transfer","access":"public","args":[{"name":"amount","type":"uint128"},{"name":"sender","type":"principal"},{"name":"recipient","type":"principal"},{"name":"memo","type":{"optional":{"buffer":{"length":34}}}}],"outputs":{"type":{"response":{"ok":"bool","error":"uint128"}}}} as TypedAbiFunction<[amount: TypedAbiArg<number | bigint, "amount">, sender: TypedAbiArg<string, "sender">, recipient: TypedAbiArg<string, "recipient">, memo: TypedAbiArg<Uint8Array | null, "memo">], Response<boolean, bigint>>,
-    updateBlocklist: {"name":"update-blocklist","access":"public","args":[{"name":"account","type":"principal"},{"name":"blocked","type":"bool"}],"outputs":{"type":{"response":{"ok":"bool","error":"uint128"}}}} as TypedAbiFunction<[account: TypedAbiArg<string, "account">, blocked: TypedAbiArg<boolean, "blocked">], Response<boolean, bigint>>,
-    isBlocked: {"name":"is-blocked","access":"read_only","args":[{"name":"account","type":"principal"}],"outputs":{"type":"bool"}} as TypedAbiFunction<[account: TypedAbiArg<string, "account">], boolean>
-  },
-  "maps": {
-    blocklist: {"name":"blocklist","key":"principal","value":"bool"} as TypedAbiMap<string, boolean>
-  },
-  "variables": {
-    ERR_BLOCKED: {
-  name: 'ERR_BLOCKED',
-  type: {
-    response: {
-      ok: 'none',
-      error: 'uint128'
-    }
-  },
-  access: 'constant'
-} as TypedAbiVariable<Response<null, bigint>>,
-    ERR_UNAUTHORIZED: {
-  name: 'ERR_UNAUTHORIZED',
-  type: {
-    response: {
-      ok: 'none',
-      error: 'uint128'
-    }
-  },
-  access: 'constant'
-} as TypedAbiVariable<Response<null, bigint>>,
-    owner: {
-  name: 'owner',
-  type: 'principal',
-  access: 'constant'
-} as TypedAbiVariable<string>
-  },
-  constants: {
-  ERR_BLOCKED: {
-    isOk: false,
-    value: 409n
-  },
-  ERR_UNAUTHORIZED: {
-    isOk: false,
-    value: 404n
-  },
-  owner: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
-},
-  "non_fungible_tokens": [
-    
-  ],
-  "fungible_tokens":[],"epoch":"Epoch25","clarity_version":"Clarity2",
-  contractName: 'token-v1',
   }
 } as const;
 
-export const accounts = {"wallet_7":{"address":"ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ","balance":"100000000000000"},"wallet_4":{"address":"ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND","balance":"100000000000000"},"wallet_8":{"address":"ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP","balance":"100000000000000"},"wallet_3":{"address":"ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC","balance":"100000000000000"},"wallet_1":{"address":"ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5","balance":"100000000000000"},"deployer":{"address":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM","balance":"100000000000000"},"wallet_2":{"address":"ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG","balance":"100000000000000"},"wallet_5":{"address":"ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB","balance":"100000000000000"},"wallet_6":{"address":"ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0","balance":"100000000000000"},"faucet":{"address":"STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6","balance":"100000000000000"}} as const;
+export const accounts = {"wallet_1":{"address":"ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5","balance":"100000000000000"},"wallet_2":{"address":"ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG","balance":"100000000000000"},"deployer":{"address":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM","balance":"100000000000000"},"faucet":{"address":"STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6","balance":"100000000000000"},"wallet_4":{"address":"ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND","balance":"100000000000000"},"wallet_3":{"address":"ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC","balance":"100000000000000"},"wallet_6":{"address":"ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0","balance":"100000000000000"},"wallet_8":{"address":"ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP","balance":"100000000000000"},"wallet_5":{"address":"ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB","balance":"100000000000000"},"wallet_7":{"address":"ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ","balance":"100000000000000"}} as const;
 
-export const identifiers = {"sip010TraitFtStandard":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard","token":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token","tokenV1":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token-v1"} as const
+export const identifiers = {"proxyV1":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.proxy-v1","sip010TraitFtStandard":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard","token":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token"} as const
 
 export const simnet = {
   accounts,
@@ -178,7 +178,7 @@ export const simnet = {
 } as const;
 
 
-export const deployments = {"sip010TraitFtStandard":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip-010-trait-ft-standard","simnet":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard","testnet":null,"mainnet":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard"},"token":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token","simnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token","testnet":null,"mainnet":null},"tokenV1":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token-v1","simnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token-v1","testnet":null,"mainnet":null}} as const;
+export const deployments = {"proxyV1":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.proxy-v1","simnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.proxy-v1","testnet":null,"mainnet":null},"sip010TraitFtStandard":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip-010-trait-ft-standard","simnet":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard","testnet":null,"mainnet":"SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard"},"token":{"devnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token","simnet":"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token","testnet":null,"mainnet":null}} as const;
 
 export const project = {
   contracts,

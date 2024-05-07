@@ -170,6 +170,21 @@ plan:
       transactions: []
       epoch: "2.1"
     - id: 39
+      transactions: []
+      epoch: "2.1"
+    - id: 40
+      transactions: []
+      epoch: "2.1"
+    - id: 41
+      transactions: []
+      epoch: "2.1"
+    - id: 42
+      transactions: []
+      epoch: "2.1"
+    - id: 43
+      transactions: []
+      epoch: "2.1"
+    - id: 44
       transactions:
         - emulated-contract-publish:
             contract-name: token
@@ -177,25 +192,10 @@ plan:
             path: contracts/token.clar
             clarity-version: 2
         - emulated-contract-publish:
-            contract-name: token-v1
+            contract-name: proxy-v1
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            path: contracts/token-v1.clar
+            path: contracts/proxy-v1.clar
             clarity-version: 2
-      epoch: "2.5"
-    - id: 40
-      transactions: []
-      epoch: "2.5"
-    - id: 41
-      transactions: []
-      epoch: "2.5"
-    - id: 42
-      transactions: []
-      epoch: "2.5"
-    - id: 43
-      transactions: []
-      epoch: "2.5"
-    - id: 44
-      transactions: []
       epoch: "2.5"
     - id: 45
       transactions: []
@@ -291,5 +291,35 @@ plan:
       transactions: []
       epoch: "2.5"
     - id: 76
+      transactions: []
+      epoch: "2.5"
+    - id: 77
+      transactions: []
+      epoch: "2.5"
+    - id: 78
+      transactions: []
+      epoch: "2.5"
+    - id: 79
+      transactions: []
+      epoch: "2.5"
+    - id: 80
+      transactions: []
+      epoch: "2.5"
+    - id: 81
+      transactions: []
+      epoch: "2.5"
+    - id: 82
+      transactions: []
+      epoch: "2.5"
+    - id: 83
+      transactions: []
+      epoch: "2.5"
+    - id: 84
+      transactions: []
+      epoch: "2.5"
+    - id: 85
+      transactions: []
+      epoch: "2.5"
+    - id: 86
       transactions: []
       epoch: "2.5"

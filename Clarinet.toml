@@ -7,15 +7,17 @@ cache_dir = './.cache'
 
 [[project.requirements]]
 contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard'
+
 [contracts.token]
 path = 'contracts/token.clar'
 clarity_version = 2
 epoch = 2.5
 
-[contracts.token-v1]
-path = 'contracts/token-v1.clar'
+[contracts.proxy-v1]
+path = 'contracts/proxy-v1.clar'
 clarity_version = 2
 epoch = 2.5
+
 [repl.analysis]
 passes = ['check_checker']
 

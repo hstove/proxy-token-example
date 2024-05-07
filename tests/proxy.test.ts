@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { rovOk, txOk, txErr, rov } from "@clarigen/test";
 
 const contracts = projectFactory(project, "simnet");
-const proxy = contracts.tokenV1;
+const proxy = contracts.proxyV1;
 const token = contracts.token;
 
 const owner = accounts.deployer.address;
